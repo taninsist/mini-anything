@@ -2,7 +2,7 @@ const PLUGIN_NAME = "MiniCleanWebpackPlugin";
 const fs = require("fs");
 const path = require("path");
 
-/** @typedef import("webpack").Compiler} Compiler */
+/** @typedef import("webpack").Compiler Compiler */
 /** @typedef {ReturnType<Compiler["getInfrastructureLogger"]>} Logger */
 
 class MiniCleanWebpackPlugin {
@@ -14,6 +14,7 @@ class MiniCleanWebpackPlugin {
     this.logger = compiler.getInfrastructureLogger(PLUGIN_NAME);
     // 1. Plugins 加载时 缓存 输出目录
     this.outputPath = compiler.options.output.path;
+    this.mode = compiler.options.mode;
 
     // 2. 注册 hook 执行程序
     compiler.hooks.initialize.tap(PLUGIN_NAME, () => {
@@ -21,6 +22,7 @@ class MiniCleanWebpackPlugin {
 
       const path = this.outputPath;
       // 执行时删除输出目录
+
       deleteFolderRecursive(path);
 
       this.logger.info(PLUGIN_NAME, "end");

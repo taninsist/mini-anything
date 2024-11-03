@@ -2,12 +2,14 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCleanWebpackPlugin = require("./plugins/miniCleanWebpackPlugin");
+const MiniHtmlWebpackPlugin = require("./plugins/miniHtmlWebpackPlugin");
 
 module.exports = {
   entry: "./src/main.js",
   output: {
-    filename: "[name].[hash:5].js",
-    path: path.resolve(__dirname, "output"),
+    // filename: "[name].[hash:5].js",
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
   },
   module: {
     rules: [
@@ -25,14 +27,15 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    static: "./dist",
-  },
+  devServer: {},
   plugins: [
     new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({
+    new MiniHtmlWebpackPlugin({
       template: path.resolve(__dirname, "public", "index.html"),
     }),
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, "public", "index.html"),
+    // }),
     new MiniCleanWebpackPlugin(),
   ],
 };
